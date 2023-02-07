@@ -1,2 +1,2 @@
 # python-skola
-Python úlohy ze školy
+Python úlohy z hodin programování pod vedením učitelem Radkem S.
