@@ -26,9 +26,9 @@ N-tice (tuple)
 # pokus=1,2,3
 # print(pokus)
 
-n1=tuple("Ahoj")
+"""n1=tuple("Ahoj")
 n1=list(n1)
-print (n1)
+print (n1)"""
 
 
 """
@@ -40,6 +40,20 @@ print (n1)
    Nakonec seznam vypište tak, aby n-tice byly pod 
    sebou.
 """
+
+import random
+
+def nahodna_cisla():
+   print((random.randint(0,10), random.randint(0,10), random.randint(0,10)))
+
+def seznam():
+   seznam = []
+   for i in range(10):
+      seznam.append((random.randint(0,1), random.randint(0,1), random.randint(0,1)))
+      print(seznam[i])
+
+seznam()
+
 
 
 
