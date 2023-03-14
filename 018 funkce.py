@@ -30,4 +30,5 @@ def zasifruj_text(text):
     abeceda = "abcdefghijklmnopqrstuvwxyz"
     output = ""
     for i in range(len(text)):
-        output += f"{i}{abeceda[random.randint(0, len(abeceda))]}"
+        output += f"{i}{abeceda[random.randint(0, len(abeceda) - 1)]}"
+    return output
