@@ -96,7 +96,6 @@ def smaz(jmeno):
   lide.remove(jmeno)
 
 def zjisti(jmeno):
-
   return jmeno in lide
 
 def vypis():
