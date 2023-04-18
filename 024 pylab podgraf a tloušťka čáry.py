@@ -11,29 +11,27 @@ subplot(x,y,z) - specifikuje, do kterého grafu v aktuálním obrázku se
                - rozložení x a y musí být stejné  
 """
 
-import pylab as p
 
-p.subplot(2,2,1)
-p.plot([1,2,3,5], linewidth=4)
-p.plot([3,1,5,2])
-p.title("Graf 1")
+# p.subplot(2,2,1)
+# p.plot([1,2,3,5], linewidth=4)
+# p.plot([3,1,5,2])
+# p.title("Graf 1")
 
 
-p.subplot(2,2,2)
-p.plot([3,2,6,2])
-p.title("Graf 2")
+# p.subplot(2,2,2)
+# p.plot([3,2,6,2])
+# p.title("Graf 2")
 
-p.subplot(2,2,3)
-p.plot([1,2,3,5],"y--", linewidth=4)
-p.plot([3,1,5,2])
-p.title("Graf 3")
+# p.subplot(2,2,3)
+# p.plot([1,2,3,5],"y--", linewidth=4)
+# p.plot([3,1,5,2])
+# p.title("Graf 3")
 
-p.subplot(2,2,4)
-p.plot([3,2,6,2])
-p.title("Graf 4")
+# p.subplot(2,2,4)
+# p.plot([3,2,6,2])
+# p.title("Graf 4")
 
-p.show()
-
+# p.show()
 
 
 """
@@ -42,3 +40,19 @@ p.show()
    pokaždé jinou barvou a jinou tloušťkou.
    Použijte funkci abs().
 """
+
+
+
+
+import pylab as p
+def podgraf():
+   x = p.arange(-100, 100, 20)
+   y = abs(x-1)+1
+
+   p.subplot(1, 2, 1)
+   p.plot(x, y, "bo-", linewidth=4)
+
+   p.subplot(1, 2, 2)
+   p.plot(x, y, "yo-", linewidth=1)
+
+   p.show()

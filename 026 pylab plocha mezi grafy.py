@@ -13,9 +13,9 @@ facecolor="color"     - určuje barvu výplně
 
 import pylab as p
 
-x=p.arange(0,2*p.pi,0.1)
-y1=p.cos(x)
-y2=p.sin(x)
+# x=p.arange(0,2*p.pi,0.1)
+# y1=p.cos(x)
+# y2=p.sin(x)
 #y2=x/3
 
 
@@ -28,15 +28,28 @@ y2=p.sin(x)
 # p.plot(x,y2)
 # p.fill_between(x,y1,y2,where=(y2<=0),facecolor="b")
 
-p.plot(x,y1)
-p.plot(x,y2)
-p.fill_between(x,y1,y2,where=(y2>=0)*(x<=1),facecolor="g")
+# p.plot(x,y1)
+# p.plot(x,y2)
+# p.fill_between(x,y1,y2,where=(y2>=0)*(x<=1),facecolor="g")
 
-p.grid()
-p.show()
+# p.grid()
+# p.show()
 
 """
 Úkol:
 1) Vyplňte plochu mezi fcemi cos(x) a sin(2*x) fialovou 
    barvou v hexadecimálním tvaru na intervalu <0,2*pi>.
 """   
+
+def vypln():
+   x=p.arange(0,2*p.pi,0.1)
+   y1=p.cos(x)
+   y2=p.sin(2*x)
+
+   p.plot(x, y1)
+   p.plot(x, y2)
+
+   p.fill_between(x,y1,y2,facecolor="#800080")
+   p.show()
+
+vypln()

@@ -67,10 +67,10 @@ def trojuhelnik():
    for i in range(3):
       trojuhelnikX.append(int(input(f"Zadejte souřadnici x bodu {'ABC'[i]}: ")))
       trojuhelnikY.append(int(input(f"Zadejte souřadnici y bodu {'ABC'[i]}: ")))
+   trojuhelnikX.append(trojuhelnikX[0])
+   trojuhelnikY.append(trojuhelnikY[0])
    p.plot(trojuhelnikX, trojuhelnikY, "bo-")
    p.show()
-
-trojuhelnik()
 
 
 
