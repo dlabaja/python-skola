@@ -48,7 +48,7 @@ import pylab as p
 """   
 
 def texty():
-  x = p.arange(-0.5, 4, 0.2)
+  x = p.arange(-0.5, 4, 0.1)
   y1=-(x-2)**2 + 4
   y2=x
   p.plot(x, y1, label="$y=-(x-2)^2+4$")
