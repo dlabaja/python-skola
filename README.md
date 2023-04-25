@@ -1,2 +1,4 @@
 # python-skola
-Python úlohy z hodin programování vedené profesorem Radkem Stejskalem
+Python úlohy vytvořené profesorem Radkem Stejskalem a mé řešení k nim
+
+Třeba někomu pomůžou s pochopením jazyka...
