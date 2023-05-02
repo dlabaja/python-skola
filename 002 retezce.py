@@ -53,10 +53,10 @@ ret="VOS a \"SPSE\" Olomouc"
 # print (vysledek)
 
 
-tab="<table border=\"1\">"
-tab=tab+10*"\n<tr><td>Buňka 1</td><td>Buňka 1</td>" 
-tab=tab+"\n</table>"
-print(tab)
+# tab="<table border=\"1\">"
+# tab=tab+10*"\n<tr><td>Buňka 1</td><td>Buňka 1</td>" 
+# tab=tab+"\n</table>"
+# print(tab)
 
 """
 Úkol:

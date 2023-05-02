@@ -37,16 +37,16 @@ a+=1   stejné jako a=a+1
 
 
 
-a=7
-print("Původní hodnota proměnné a:",a)
-a=a+3
-print("Nová hodnota proměnné a:",a)
+# a=7
+# print("Původní hodnota proměnné a:",a)
+# a=a+3
+# print("Nová hodnota proměnné a:",a)
 
 
-a=10
-print ("Původní hodnota:",a)
-a+=5 
-print ("Nová hodnota:",a)
+# a=10
+# print ("Původní hodnota:",a)
+# a+=5 
+# print ("Nová hodnota:",a)
 
 
 
@@ -80,10 +80,7 @@ print ("Nová hodnota:",a)
 """
 
 print(5/2 + 2/5)
-a = 5
-b = 6
-c = 7
-print(a * b *c) 
+
 
 
 
