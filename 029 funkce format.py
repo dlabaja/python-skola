@@ -103,4 +103,4 @@ def dvacitka():
 def sloupec():
    for _ in range(10):
       print(f"{random.randint(0, 1000):<5}Kč") # doleva
-      # print(f"{random.randint(0, 1000):>5}Kč") -> doprava
+      # print(f"{random.randint(0, 1000):>5}Kč") # doprava
