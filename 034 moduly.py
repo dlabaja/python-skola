@@ -27,10 +27,10 @@ import mujsoubor.py
 - funkce (podprogramy) -> můžu je volat (spouštět)
 """
 
-PI = 3.141
+# PI = 3.141
 
-def PovrchKoule(r):
-    return (4*PI*r**2)
+# def PovrchKoule(r):
+#     return (4*PI*r**2)
 
 """
 Úkoly:
@@ -40,11 +40,13 @@ def PovrchKoule(r):
     2) PovrchKrychle(a)
     3) ObjemKvadru(a,b,c)
     4) PovrchKvadru(a,b,c)
-
-
     5) ObjemJehlanu (a,v)
     6) PovrchJehlanu (a,v)
 """    
+
+import ostatní.telesa_modul as telesa
+
+print (telesa.objem_krychle(5))
 
 
 
