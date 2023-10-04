@@ -1,4 +1,4 @@
-from string import ascii_lowercase
+from string import ascii_uppercase
 from sys import stdin, stdout, stderr
 import unicodedata
 import math
@@ -13,12 +13,12 @@ def sum_values(char_dict):
     return result
 
 # input = unicodedata.normalize("NFKD", input("Zadejte vstup: ")).encode("ascii", "ignore").decode("ascii")
-input = unicodedata.normalize("NFKD", stdin.read()).encode("ascii", "ignore").decode("ascii")
+input = unicodedata.normalize("NFKD", stdin.read()).encode("ascii", "ignore").decode("ascii").upper()
 
 chars = {}
 
 # init chars dict
-for i in ascii_lowercase:
+for i in ascii_uppercase:
     chars[i] = 0
 
 for i in input:
