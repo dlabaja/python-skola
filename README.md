@@ -1,4 +1,4 @@
 # python-skola
-Python úlohy vytvořené profesorem Radkem Stejskalem a mé řešení k nim
+Můj průchod jazykem Python
 
-Třeba někomu pomůžou s pochopením jazyka...
+Třeba někomu pomůže s pochopením jazyka...
