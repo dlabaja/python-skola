@@ -1,6 +1,6 @@
 import unicodedata
 from string import ascii_lowercase
-from sys import stdin, stdout, stderr, argv
+from sys import stdin, stdout
 import click
 
 alphabet = ascii_lowercase
