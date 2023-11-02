@@ -28,6 +28,7 @@ def cipher(input, shift, output):
     caesar = ""
     for c in input:
         if c not in alphabet:
+            caesar += c
             continue
         caesar += alphabet[(alphabet.index(c) + shift) % len(alphabet)]
     return caesar
