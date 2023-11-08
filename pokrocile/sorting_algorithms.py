@@ -30,9 +30,31 @@ def bubble_sort(ls):
                 all_sorted = False
     return ls
 
+def insert_sort(ls):
+    for i in range(len(ls)):
+        j = i
+        while i > 0 and ls[j - 1] > ls[i]:
+            j -= 1
+            continue
+        ls.insert(j, ls.pop(i))
+    return ls
+
+def quicksort(ls):
+    if len(ls) <= 1:
+        return ls
+    pivot = ls[0]
+    ls.pop(0)
+    higher = []
+    lower = []
+    for item in ls:
+        if item <= pivot:
+            lower.append(item)
+            continue
+        higher.append(item)
+    return quicksort(lower) + [pivot] + quicksort(higher)
 
 gen = [0, 3, 1, 0, 5, 2, 0, 4, 2, 2, 0, 0, 3, 1, 5, 4, 4, 3, 2, 0] #generator(20, 5)
 print(gen)
-#bubble_sort(gen)
-remove_even_zeroes(gen)
-print(gen)
+#print(bubble_sort(gen))
+#print(insert_sort(gen))
+#print(quicksort(gen))
