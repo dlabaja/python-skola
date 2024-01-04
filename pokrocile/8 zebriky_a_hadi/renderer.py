@@ -1,12 +1,8 @@
 from game_objects import *
 
-black = "\u001b[30m"
 red = "\u001b[1;31m"
 green = "\u001b[1;92m"
 yellow = "\u001b[1;93m"
-blue = "\u001b[34m"
-gray = "\u001b[38;2;87;85;85m"
-bold = "\u001b[1m"
 reset_style = "\u001b[0m"
 
 def print_map(fields, players, row_count):
@@ -74,9 +70,9 @@ def generate_field(field: Field, players):
         rendered_teleport_index = "   "
     else:
         if type(field) is Ladder:
-            field_type = f"{bold}{green}L{reset_style}"
+            field_type = f"{green}L{reset_style}"
         elif type(field) is Snake:
-            field_type = f"{bold}{red}S{reset_style}"
+            field_type = f"{red}S{reset_style}"
 
     rendered_players = ""
     for player in players:

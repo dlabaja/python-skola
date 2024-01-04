@@ -1,13 +1,17 @@
 from game_objects import *
 import renderer
 
+reset_style = "\u001b[0m"
+yellow = "\u001b[1;93m"
+red = "\u001b[1;31m"
+green = "\u001b[1;92m"
+
 class Game:
     fields = []
     players = []
 
     def __init__(self, player_names: list, row_count, column_count):
         self.map_length = row_count * column_count
-        if self.map_length > 400: raise Exception("To pole je nějaké velké, takový terminál určitě nemáš :)")
 
         self.generate_map()
 
@@ -21,33 +25,46 @@ class Game:
             for player in self.players:
                 renderer.print_map(self.fields, self.players, row_count)
 
-                input(f"Na tahu je hráč {player.name}. Stiskněte ENTER pro hod kostkou.")
+                input(f"Na tahu je hráč {yellow}{player.name}{reset_style}. Stiskněte ENTER pro hod kostkou.")
                 dice = self.throw_dice()
+
+                print(
+                    f"{yellow}{player.name}{reset_style} hodil {yellow}{dice}{reset_style}, nyní je na poli {yellow}{player.position + 1 + dice}{reset_style}")
+
+                # further than last field
+                if player.position + dice > len(self.fields) - 1:
+                    print(f"{red}Přestřelil jsi mapu, zkus to příště.{reset_style}")
+                    continue
+
                 player.position += dice
 
-                if player.position >= self.map_length:
-                    self.end_game()
+                if player.position == self.map_length - 1:
+                    self.end_game(player)
                     return
 
-                print(f"Hráč hodil {dice}, nyní je na poli {player.position + 1}")
-
                 # teleporting
-                while player.position != self.fields[player.position].teleport_index:  # teleporting until the field is no longer spacial
+                while player.position != self.fields[
+                    player.position].teleport_index:  # teleporting until the field is no longer spacial
                     if isinstance(self.fields[player.position], Snake):
-                        print(f"Ale ne, na poli je had a hráč padá na pole č. {self.fields[player.position].teleport_index + 1}")
+                        print(
+                            f"Ale ne, na poli je {red}had{reset_style} a {yellow}{player.name}{reset_style} padá na pole č. {yellow}{self.fields[player.position].teleport_index + 1}{reset_style}")
                     elif isinstance(self.fields[player.position], Ladder):
-                        print(f"Hurá, po žebříku jsi vyšplhal až na pole č. {self.fields[player.position].teleport_index + 1}")
+                        print(
+                            f"Hurá, po {green}žebříku{reset_style} jsi vyšplhal až na pole č. {yellow}{self.fields[player.position].teleport_index + 1}{reset_style}")
                     player.position = self.fields[player.position].teleport_index
 
                 input("Stiskni ENTER pro předání kostky.")
 
-    def end_game(self):
-        print(f"Hráč vyhrál hru, dostal se na konec.")
+    def end_game(self, player):
+        print("====================================")
+        print(f"{yellow}{player.name}{reset_style} vyhrál hru, dostal se až na poslední políčko.")
+        print("====================================")
         return
 
     def generate_map(self):
         for i in range(self.map_length):
-            if random.randint(0, 6) == 0:
+            if random.randint(0,
+                              6) == 0 and 1 < i < self.map_length - 1:  # spawn chance, no spawn at first and last fields
                 if random.randint(0, 1) % 2 == 0:
                     self.fields.append(Ladder(i, self.map_length))
                     continue
@@ -57,4 +74,11 @@ class Game:
 
     @staticmethod
     def throw_dice():
-        return random.randint(1, 6)
+        count = 0
+        while True:
+            dice = random.randint(1, 6)
+            count += dice
+            if dice != 6:
+                return count
+            else:
+                input(f"Hodil jsi {yellow}6{reset_style}, házíš znovu!")
