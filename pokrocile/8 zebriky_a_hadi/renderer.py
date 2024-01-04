@@ -73,9 +73,9 @@ def generate_field(field: Field, players):
     if rendered_index == rendered_teleport_index:
         rendered_teleport_index = "   "
     else:
-        if type(field) == Ladder:
+        if type(field) is Ladder:
             field_type = f"{bold}{green}L{reset_style}"
-        elif type(field) == Snake:
+        elif type(field) is Snake:
             field_type = f"{bold}{red}S{reset_style}"
 
     rendered_players = ""

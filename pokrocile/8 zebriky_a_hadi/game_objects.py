@@ -33,5 +33,5 @@ class Ladder(Field):
 
 class Snake(Field):
     def __init__(self, index):
-        teleport_index = random.randint(0, index)
+        teleport_index = random.randint(0, index - 1)
         super().__init__(index, teleport_index)
