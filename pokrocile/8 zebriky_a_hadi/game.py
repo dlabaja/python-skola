@@ -7,11 +7,10 @@ red = "\u001b[1;31m"
 green = "\u001b[1;92m"
 
 class Game:
-    fields = []
-    players = []
-
     def __init__(self, player_names: list, row_count, column_count):
         self.map_length = row_count * column_count
+        self.fields = []
+        self.players = []
 
         self.generate_map()
 
