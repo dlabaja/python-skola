@@ -25,9 +25,7 @@ class DoublyLinkedList:
         self.length += 1
 
     def insert(self, data, index):
-        # todo záporné indexy
-        if index > self.length:
-            raise IndexError
+        index = self.translate_index(index)
 
         if index == self.length:  # na konci
             self.append(data)
@@ -59,6 +57,34 @@ class DoublyLinkedList:
 
         return iter(ls)
 
+    def __len__(self):
+        return self.length
+
+    def __getitem__(self, index):
+        return list(self)[index]
+
+    def __setitem__(self, index, data):
+        index = self.translate_index(index)
+        self.get_node(index).data = data
+
+    def __delitem__(self, index):
+        index = self.translate_index(index)
+        node = self.get_node(index)
+
+        prev = node.prev_node
+        node.prev_node.next_node = node.next_node
+        node.next_node.prev_node = prev
+        self.length -= 1
+
+    def translate_index(self, index):
+        if index > self.length or index < -len(self):
+            raise IndexError
+
+        if index < 0:
+            index += len(self)
+
+        return index
+
     def get_node(self, index) -> Node:
         last = self.head
         if index == 0:
@@ -69,18 +95,5 @@ class DoublyLinkedList:
                 return last.next_node
             last = last.next_node
 
-    def __len__(self):
-        return self.length
+        raise IndexError
 
-    def __getitem__(self, index):
-        return list(self)[index]
-
-    def __setitem__(self, index, data):
-        self.get_node(index).data = data
-
-    def __delitem__(self, index):
-        node = self.get_node(index)
-        prev = node.prev_node
-        node.prev_node.next_node = node.next_node
-        node.next_node.prev_node = prev
-        self.length -= 1
