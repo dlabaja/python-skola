@@ -4,6 +4,7 @@ class Node:
         self.next_node = next_node
         self.prev_node = prev_node
 
+
 class DoublyLinkedList:
     def __init__(self):
         super().__init__()
@@ -96,4 +97,3 @@ class DoublyLinkedList:
             last = last.next_node
 
         raise IndexError
-
