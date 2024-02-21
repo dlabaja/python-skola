@@ -4,13 +4,19 @@ class Node:
         self.next_node = None
         self.prev_node = None
 
+    def __repr__(self):
+        return f"Node({self.data})"
 
-class DoublyLinkedList(list):
+
+class DoublyLinkedList():
     def __init__(self):
         super().__init__()
         self.head = None
         self.tail = None
         self.length = 0
+
+    def __repr__(self):
+        return "DoublyLinkedList({})".format(", ".join(str(item) for item in self))
 
     def __len__(self):
         return self.length
@@ -50,6 +56,30 @@ class DoublyLinkedList(list):
             self.tail = new_node
         self.length += 1
 
+    def insert(self, data, position):
+        if position == len(self):
+            self.append(data)
+            return
+        new_node = Node(data)
+
+        if position == 0:
+            new_node.next_node = self.head
+            if self.head:
+                self.head.prev_node = new_node
+            self.head = new_node
+        else:
+            current = self.head
+            for _ in range(position - 1):
+                if current is None:
+                    raise IndexError("Index out of range")
+                current = current.next_node
+            new_node.prev_node = current
+            new_node.next_node = current.next_node
+            if current.next_node:
+                current.next_node.prev_node = new_node
+            current.next_node = new_node
+        self.length += 1
+
     def _get_node_at_index(self, index):
         current_node = self.head
         for _ in range(index):
@@ -61,12 +91,10 @@ class DoublyLinkedList(list):
             node.prev_node.next_node = node.next_node
         else:
             self.head = node.next_node
-
         if node.next_node:
             node.next_node.prev_node = node.prev_node
         else:
             self.tail = node.prev_node
-
         self.length -= 1
 
 # Příklad použití
