@@ -17,6 +17,10 @@ def test_get_item():
     linked_list.append(2)
     linked_list.append(3)
     assert linked_list[0] == 1
+    assert linked_list[-3] == 1
+
+    with pytest.raises(IndexError):
+        assert linked_list[99] == 0
 
 
 def test_set_item():
@@ -26,6 +30,10 @@ def test_set_item():
     linked_list.append(3)
     linked_list[0] = 0
     assert linked_list[0] == 0
+    assert linked_list[-3] == 0
+
+    with pytest.raises(IndexError):
+        linked_list[99] = 0
 
 
 def test_del_item():
@@ -37,7 +45,7 @@ def test_del_item():
     assert len(linked_list) == 2
     assert linked_list[1] == 3
     assert linked_list.tail.data == 3
-
+    assert linked_list[-1] == 3
 
 def test_iteration():
     linked_list = DoublyLinkedList()
@@ -68,6 +76,11 @@ def test_insert_at_middle(sample_doubly_linked_list):
     assert sample_doubly_linked_list.head.next_node.next_node.data == 4
     assert sample_doubly_linked_list.head.next_node.next_node.next_node.data == 3
 
+def test_insert_at_middle_negative(sample_doubly_linked_list):
+    sample_doubly_linked_list.insert(4, -1)
+    assert sample_doubly_linked_list.head.next_node.next_node.data == 4
+    assert sample_doubly_linked_list.head.next_node.next_node.next_node.data == 3
+
 
 def test_insert_at_end(sample_doubly_linked_list):
     sample_doubly_linked_list.insert(5, 3)
@@ -80,4 +93,5 @@ def test_insert_at_end(sample_doubly_linked_list):
 
 def test_insert_invalid_position(sample_doubly_linked_list):
     with pytest.raises(IndexError):
-        sample_doubly_linked_list.insert(99, 5)
+        sample_doubly_linked_list.insert(99, 4)
+        sample_doubly_linked_list.insert(99, -5)
