@@ -3,6 +3,7 @@ from pyglet import shapes
 
 from gui.grid import Grid
 from main_game.controls import Controls
+from main_game.game import Game
 
 
 class Renderer:
@@ -54,8 +55,9 @@ class Renderer:
 
     @staticmethod
     def draw_score():
+        text = f"Score: {Game.current.score}\n{"Game Over" if Game.current.ended else ""}"
         grid_size = Renderer.calculate_grid_size()
-        pyglet.text.Label("Score\nEnd", font_size=20,
+        pyglet.text.Label(text, font_size=16,
                           x=Renderer.x_offset,
                           y=Renderer.window.height - Renderer.y_offset,
                           width=Renderer.menu_width,

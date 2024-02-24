@@ -1,8 +1,10 @@
 from main_game.block import Block
 import random
 
+
 class Game:
     current = None
+
     def __init__(self):
         Game.current = self
         self.blocks = []
@@ -11,11 +13,12 @@ class Game:
         self.score = 0
         self.score_locked = False
 
-    def add_block(self, pos):
+    def add_block(self, pos, value=2):
         block = Block(pos)
+        block.value = value
         self.blocks.append(block)
 
-        if self.map[pos[1]][pos[0]] is not None:
+        if self.map[pos[1]][pos[0]] is not None and self.map[pos[1]][pos[0]].value == value:
             self.merge_blocks(self.map[pos[1]][pos[0]], block)
             return
 
@@ -134,8 +137,3 @@ class Game:
         if _map != self.map:
             return True
         return False
-
-
-
-
-

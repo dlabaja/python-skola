@@ -14,5 +14,7 @@ if __name__ == "__main__":
     r_thread = threading.Thread(target=init_renderer)
     r_thread.start()
 
-    game.next_turn()
-    game.next_turn()
+    for x in range(4):
+        for y in range(4):
+            game.add_block((x, y), 4)
+

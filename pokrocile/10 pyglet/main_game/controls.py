@@ -7,6 +7,7 @@ class Controls:
 
     @staticmethod
     def on_key_press(symbol, _):
+        print(f"{Game.current.ended} x {len(Game.current.get_free_cells())}")
         if Game.current.ended:
             return
 
