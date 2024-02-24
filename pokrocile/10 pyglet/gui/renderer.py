@@ -1,7 +1,5 @@
-import threading
-
 import pyglet
-from pyglet import shapes, gl
+from pyglet import shapes
 
 from gui.grid import Grid
 from main_game.controls import Controls
@@ -38,6 +36,7 @@ class Renderer:
         Renderer.window.clear()
         Renderer.draw_window()
         Renderer.grid.redraw_grid()
+        Renderer.draw_score()
 
     @staticmethod
     def draw_window():
@@ -52,3 +51,17 @@ class Renderer:
         shortest = min(Renderer.window.width - Renderer.menu_width - 2 * Renderer.x_offset,
                        Renderer.window.height - 2 * Renderer.y_offset)
         return shortest
+
+    @staticmethod
+    def draw_score():
+        grid_size = Renderer.calculate_grid_size()
+        pyglet.text.Label("Score\nEnd", font_size=20,
+                          x=Renderer.x_offset,
+                          y=Renderer.window.height - Renderer.y_offset,
+                          width=Renderer.menu_width,
+                          height=Renderer.window.height - grid_size,
+                          color=(0, 0, 0, 255),
+                          anchor_x="left",
+                          anchor_y="top",
+                          bold=True,
+                          multiline=True).draw()

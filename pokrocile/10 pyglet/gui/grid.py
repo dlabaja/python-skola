@@ -32,6 +32,11 @@ class Grid:
             for y in range(4):
                 self.draw_cell(x, y)
 
+        for x in range(4):
+            for y in range(4):
+                if Game.current.map[y][x] is not None:
+                    self.draw_text_cell(x, y, str(Game.current.get_block_value(x, y)))
+
     def draw_cell(self, x, y):
         # main_game rect
         s = shapes.Rectangle(x=self.anchor_x - x * self.cell_size,
@@ -58,14 +63,11 @@ class Grid:
         s.anchor_y = self.cell_size - Grid.subRectOffset
         s.draw()
 
-        if Game.current.map[y][x] is not None:
-            self.draw_text_cell(x, y, str(Game.current.get_block_value(x, y)))
-
     def draw_text_cell(self, x, y, text):
         bg = Grid.tile_colors[int(text)][1] if int(text) in Grid.tile_colors.keys() else (60, 58, 50)
         fg = Grid.tile_colors[int(text)][0] if int(text) in Grid.tile_colors.keys() else (249, 246, 242)
 
-        s = shapes.Rectangle(x=self.anchor_x - x * self.cell_size,
+        s = shapes.Rectangle(x=self.anchor_x - 4 * self.cell_size + (x + 1) * self.cell_size,
                              y=self.anchor_y - y * self.cell_size,
                              width=self.cell_size - 2 * Grid.subRectOffset,
                              height=self.cell_size - 2 * Grid.subRectOffset,
@@ -73,15 +75,14 @@ class Grid:
 
         s.anchor_x = self.cell_size - Grid.subRectOffset
         s.anchor_y = self.cell_size - Grid.subRectOffset
-
         s.draw()
 
         pyglet.text.Label(text, font_size=32 - 2 * (len(text)),
-                          x=self.anchor_x - x * self.cell_size - self.cell_size // 2,
-                          y=self.anchor_y - y * self.cell_size - self.cell_size + self.cell_size // 4,
-                          width=self.cell_size - 2 * Grid.subRectOffset,
-                          height=self.cell_size - 2 * Grid.subRectOffset,
-                          color=(fg[0], fg[1], fg[2], 255),
-                          anchor_x='center',
-                          anchor_y='center',
-                          bold=True).draw()
+                              x=self.anchor_x - 4 * self.cell_size + (x + 1) * self.cell_size - self.cell_size // 2,
+                              y=self.anchor_y - y * self.cell_size - self.cell_size + self.cell_size // 4,
+                              width=self.cell_size - 2 * Grid.subRectOffset,
+                              height=self.cell_size - 2 * Grid.subRectOffset,
+                              color=(fg[0], fg[1], fg[2], 255),
+                              anchor_x='center',
+                              anchor_y='center',
+                              bold=True).draw()
