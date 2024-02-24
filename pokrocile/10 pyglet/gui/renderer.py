@@ -1,7 +1,10 @@
+import threading
+
 import pyglet
 from pyglet import shapes, gl
 
 from gui.grid import Grid
+from main_game.controls import Controls
 
 
 class Renderer:
@@ -19,10 +22,16 @@ class Renderer:
         r.window.on_draw = r.on_draw
         r.window.set_minimum_size(800, 600)
 
+        Renderer.initialize_controls()  # Inicializace ovládání
+
         size = r.calculate_grid_size()
         r.grid = Grid(size, r.window.width - r.x_offset, r.window.height - r.y_offset)
 
         pyglet.app.run()
+
+    @staticmethod
+    def initialize_controls():
+        Renderer.window.on_key_press = Controls.on_key_press
 
     @staticmethod
     def on_draw():
