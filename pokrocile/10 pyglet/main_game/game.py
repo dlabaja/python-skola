@@ -80,6 +80,11 @@ class Game:
         return False
 
     def __move_blocks__(self, blocks, next_block_offset):
+        from main_game.controls import Controls
+        if Controls.has_no_moves():
+            self.ended = True
+            return
+
         i = 0
         for block in blocks:
             if block is None:

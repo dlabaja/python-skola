@@ -6,20 +6,23 @@ class Controls:
     keys = key.KeyStateHandler()
 
     @staticmethod
-    def on_key_press(symbol, _):
-        print(f"{Game.current.ended} x {len(Game.current.get_free_cells())}")
-        if Game.current.ended:
-            return
+    def key_mapping():
+        return {
+            (key.W, key.UP): Game.current.move_blocks_up,
+            (key.A, key.LEFT): Game.current.move_blocks_left,
+            (key.S, key.DOWN): Game.current.move_blocks_down,
+            (key.D, key.RIGHT): Game.current.move_blocks_right,
+            key.P: Controls.reset_game()
+        }
 
-        if symbol == key.W or symbol == key.UP:
-            if Game.current.move_blocks_up():
-                Game.current.next_turn()
-        elif symbol == key.A or symbol == key.LEFT:
-            if Game.current.move_blocks_left():
-                Game.current.next_turn()
-        elif symbol == key.S or symbol == key.DOWN:
-            if Game.current.move_blocks_down():
-                Game.current.next_turn()
-        elif symbol == key.D or symbol == key.RIGHT:
-            if Game.current.move_blocks_right():
-                Game.current.next_turn()
+    @staticmethod
+    def reset_game():
+        Game.current = Game
+
+    @staticmethod
+    def on_key_press(symbol, _):
+        for key_pair, movement_function in Controls.key_mapping().items():
+            if symbol in key_pair:
+                if movement_function():
+                    Game.current.next_turn()
+                break

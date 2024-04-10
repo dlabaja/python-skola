@@ -55,7 +55,7 @@ class Renderer:
 
     @staticmethod
     def draw_score():
-        text = f"Score: {Game.current.score}\n{"Game Over" if Game.current.ended else ""}"
+        text = f"Score: {Game.current.score}\n{'Game Over' if Game.current.ended else ''}\n Press P to RESTART"
         grid_size = Renderer.calculate_grid_size()
         pyglet.text.Label(text, font_size=16,
                           x=Renderer.x_offset,
