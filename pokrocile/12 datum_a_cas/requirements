@@ -1,0 +1,8 @@
+convertdate==2.4.0
+lunardate==0.2.2
+pyluach==2.2.0
+PyMeeus==0.5.12
+pytz==2024.1
+six==1.16.0
+tzdata==2024.1
+workalendar==17.0.0
