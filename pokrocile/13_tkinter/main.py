@@ -2,6 +2,7 @@
 
 import tkinter as tk
 from tkinter import HORIZONTAL, TOP, LEFT
+from datetime import datetime
 
 # from tkinter import ttk
 
@@ -31,8 +32,10 @@ class Application(tk.Tk):
     def __init__(self):
         super().__init__(className=self.name)
         self.title(self.name)
+        self.timeActive = True
         self.bind("<Escape>", self.quit)
-        self.lblMain = tk.Label(self, text="Color Mishmash")
+        self.lblMain = tk.Label(self, text=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        self.update_time()
         self.btnQuit = tk.Button(self, text="Save & Quit", command=self.quit)
         self.btnClear = tk.Button(self, text="Clear colors", command=self.clearColors)
         self.frameR = tk.Frame(master=self)
@@ -103,6 +106,8 @@ class Application(tk.Tk):
         self.canvas.pack(side=TOP, fill="both")
         self.frameMem.pack(side=TOP, fill="both")
 
+        self.lblMain.bind("<Button-1>", self.clickHandlerDate)
+
         self.canvasList = []
         for row in range(3):
             for col in range(7):
@@ -114,6 +119,9 @@ class Application(tk.Tk):
         self.btnQuit.pack()
         self.btnClear.pack()
         self.load()
+
+    def clickHandlerDate(self, _):
+        self.timeActive = not self.timeActive
 
     def clickHandler(self, event):
         if self.cget("cursor") != "pencil":
@@ -159,6 +167,11 @@ class Application(tk.Tk):
         for canvas in self.canvasList:
             canvas.config(background="#FFFFFF")
 
+    def update_time(self):
+        if self.timeActive:
+            time_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.lblMain.config(text=time_string)
+        self.after(1000, self.update_time)
 
 app = Application()
 app.mainloop()
