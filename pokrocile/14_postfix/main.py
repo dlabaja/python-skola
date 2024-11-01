@@ -99,21 +99,21 @@ class PostfixCalculator:
         tokens = re.findall(r'[+\%\-\*\/()]|\d*\.?\d+|[a-z]+', infix)
 
         for item in tokens:
-            if item == "(":  # start of stack region
+            if item == "(":
                 stack.append("(")
             elif re.match(r'\d*\.?\d+', item):  # number
                 postfix.append(float(item))
-            elif item == ")":  # pop stack to 14_postfix until '('
+            elif item == ")":
                 while stack and stack[-1] != "(":
                     postfix.append(stack.pop())
                 if stack:
                     stack.pop()
-            else:  # operator/function
+            else:
                 while stack and stack[-1] != "(" and self.get_precedence(stack[-1]) >= self.get_precedence(item):
                     postfix.append(stack.pop())
                 stack.append(item)
 
-        while stack:  # empty stack
+        while stack:
             postfix.append(stack.pop())
 
         return postfix
@@ -130,8 +130,6 @@ class PostfixCalculator:
 
 class CalculatorApp:
     def __init__(self, root):
-        self.calculator = PostfixCalculator()
-
         self.root = root
         self.root.title("Postfix Calculator")
         self.root.geometry("400x300")
@@ -139,23 +137,62 @@ class CalculatorApp:
         self.result_var = StringVar()
         self.input_var = StringVar()
 
-        # Result label
+        self.history = []
+        self.history_index = None
+
         self.result_label = ttk.Label(self.root, textvariable=self.result_var, font=("Helvetica", 16), anchor="center")
         self.result_label.pack(pady=10)
 
-        # Input field
         self.input_entry = ttk.Entry(self.root, textvariable=self.input_var, font=("Helvetica", 14), justify='center')
         self.input_entry.pack(pady=10)
         self.input_entry.bind("<Return>", self.calculate_result)
+        self.input_entry.bind("<Up>", self.show_previous_command)
+        self.input_entry.bind("<Down>", self.show_next_command)
 
     def calculate_result(self, event):
-        try:
-            infix_expr = self.input_var.get()
-            postfix_expr = self.calculator.infix_to_postfix(infix_expr)
-            result = self.calculator.calculate_postfix(postfix_expr)
-            self.result_var.set(f"Result: {result}")
-        except Exception as e:
-            self.result_var.set(f"Error: {str(e)}")
+        infix_expr = self.input_var.get()
+        if infix_expr:
+            calculator = PostfixCalculator()
+
+            try:
+                postfix_expr = calculator.infix_to_postfix(infix_expr)
+                result = calculator.calculate_postfix(postfix_expr)
+                self.result_var.set(f"Result: {result}")
+
+                self.history.append(infix_expr)
+                self.history_index = None
+            except Exception as e:
+                self.result_var.set(f"Error: {str(e)}")
+
+        self.input_var.set("")
+
+    def show_previous_command(self, _):
+        if self.history and (self.history_index is None or self.history_index > 0):
+            if self.history_index is None:
+                self.history_index = len(self.history) - 1
+            else:
+                self.history_index -= 1
+
+            self.input_var.set(self.history[self.history_index])
+            self.input_entry.icursor(tk.END)
+
+    def show_next_command(self, _):
+        if self.history and self.history_index is not None:
+            if self.history_index < len(self.history) - 1:
+                self.history_index += 1
+                self.input_var.set(self.history[self.history_index])
+            else:
+                self.input_var.set("")
+                self.history_index = None
+
+            self.input_entry.icursor(tk.END)
+
+
+# Main loop
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = CalculatorApp(root)
+    root.mainloop()
 
 # Main loop
 if __name__ == "__main__":
