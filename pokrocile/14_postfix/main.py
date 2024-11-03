@@ -131,7 +131,7 @@ class PostfixCalculator:
 class CalculatorApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Postfix Calculator")
+        self.root.title("Calculator")
         self.root.geometry("400x300")
 
         self.result_var = StringVar()
@@ -140,16 +140,23 @@ class CalculatorApp:
         self.history = []
         self.history_index = None
 
-        self.result_label = ttk.Label(self.root, textvariable=self.result_var, font=("Helvetica", 16), anchor="center")
-        self.result_label.pack(pady=10)
+        self.label = ttk.Label(self.root, text="Write your input here,\nthen press Enter:", font=("Helvetica", 16), anchor="center", justify="center")
+        self.label.pack(pady=10)
 
         self.input_entry = ttk.Entry(self.root, textvariable=self.input_var, font=("Helvetica", 14), justify='center')
         self.input_entry.pack(pady=10)
+
+        self.result_label = ttk.Label(self.root, textvariable=self.result_var, font=("Helvetica", 16), anchor="center")
+        self.result_label.pack(pady=10)
+
         self.input_entry.bind("<Return>", self.calculate_result)
         self.input_entry.bind("<Up>", self.show_previous_command)
         self.input_entry.bind("<Down>", self.show_next_command)
 
-    def calculate_result(self, event):
+        status = ttk.Label(self.root, textvariable=self.result_var, anchor="w", relief="sunken")
+        status.pack(side="bottom", fill="x")
+
+    def calculate_result(self, _):
         infix_expr = self.input_var.get()
         if infix_expr:
             calculator = PostfixCalculator()
@@ -188,13 +195,6 @@ class CalculatorApp:
             self.input_entry.icursor(tk.END)
 
 
-# Main loop
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = CalculatorApp(root)
-    root.mainloop()
-
-# Main loop
 if __name__ == "__main__":
     root = tk.Tk()
     app = CalculatorApp(root)
