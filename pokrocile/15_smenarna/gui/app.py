@@ -102,10 +102,10 @@ class Application(tk.Tk):
                 else:
                     self.varAuto.set(False)
                 f.close()
-        else:
-            pass
+
         if self.varAuto.get():
             self.download()
+
         if os.path.exists("kurzovni_listek.txt"):
             with open("kurzovni_listek.txt", "r") as f:
                 date_line = f.readline()
@@ -127,9 +127,7 @@ class Application(tk.Tk):
     def on_select(self, event=None):
         self.output.set(0)
         selected = self.currency.get()
-        if self.exrate == {}:
-            pass
-        else:
+        if self.exrate != {}:
             try:
                 info = self.exrate[selected]
                 self.ammount.set(info[0])
@@ -138,8 +136,8 @@ class Application(tk.Tk):
                 self.inLabel.config(text=info[2])
             except KeyError:
                 pass
-            if (
-                    self.varTransaction.get() == "purchase" or self.varTransaction.get() == "sale") and self.ammount.get() != '':
+            if ((self.varTransaction.get() == "purchase" or self.varTransaction.get() == "sale") and
+                    self.ammount.get() != ''):
                 self.calcBtn.config(state="normal")
 
     def changeTransaction(self):
