@@ -6,7 +6,7 @@ class About(tk.Toplevel):
         super().__init__(parent)
         self.config()
 
-        self.lbl = tk.Label(self, text="Chyba")
+        self.lbl = tk.Label(self, text="to nebylo moc skibidi")
         self.btn = tk.Button(self, text="OK", command=self.close)
 
         self.lbl.pack()

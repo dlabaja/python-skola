@@ -24,6 +24,8 @@ class Application(tk.Tk):
         self.exrate = {}
         self.input = tk.IntVar()
         self.output = tk.IntVar()
+        self.input_reverse = tk.IntVar()  # Pro CZK to UNKNOWN
+        self.output_reverse = tk.IntVar()
 
         self.tickFrame = tk.LabelFrame(self, text="Kurzovní lístek")
         self.tickState = tk.Label(self.tickFrame, text="Stav kurzovního lístku")
@@ -73,7 +75,7 @@ class Application(tk.Tk):
         self.entryRate.grid(row=1)
         self.raLabel.grid(row=1, column=1)
 
-        self.calcFrame = tk.LabelFrame(self, text="Výpočet")
+        self.calcFrame = tk.LabelFrame(self, text="Výpočet (do CZK)")
         self.calcInput = MyEntry(self.calcFrame, textvariable=self.input)
         self.calcBtn = tk.Button(self.calcFrame, text="Výpočet", state="disabled", command=self.calculate)
         self.calcOutput = MyEntry(self.calcFrame, textvariable=self.output, state="readonly")
@@ -85,6 +87,21 @@ class Application(tk.Tk):
         self.calcBtn.grid(row=2, column=0)
         self.calcOutput.grid(row=1, column=0)
         self.ouLabel.grid(row=1, column=1)
+
+        self.calcFrameReverse = tk.LabelFrame(self, text="Výpočet (z CZK)")
+        self.calcInputReverse = MyEntry(self.calcFrameReverse, textvariable=self.input_reverse)
+        self.calcBtnReverse = tk.Button(
+            self.calcFrameReverse, text="Výpočet", state="disabled", command=self.calculate_reverse
+        )
+        self.calcOutputReverse = MyEntry(self.calcFrameReverse, textvariable=self.output_reverse, state="readonly")
+        self.inLabelReverse = tk.Label(self.calcFrameReverse, text="CZK")
+        self.ouLabelReverse = tk.Label(self.calcFrameReverse, text="UNKNOWN")
+        self.calcFrameReverse.pack(anchor="w", padx=5)
+        self.calcInputReverse.grid(row=0, column=0)
+        self.inLabelReverse.grid(row=0, column=1)
+        self.calcBtnReverse.grid(row=2, column=0)
+        self.calcOutputReverse.grid(row=1, column=0)
+        self.ouLabelReverse.grid(row=1, column=1)
 
         self.btn = tk.Button(self, text="Quit", command=self.quit)
         self.btn.pack()
@@ -126,6 +143,7 @@ class Application(tk.Tk):
 
     def on_select(self, event=None):
         self.output.set(0)
+        self.output_reverse.set(0)  # Vynulování druhého pole
         selected = self.currency.get()
         if self.exrate != {}:
             try:
@@ -134,11 +152,13 @@ class Application(tk.Tk):
                 self.rate.set(info[1] * self.feemod)
                 self.amLabel.config(text=info[2])
                 self.inLabel.config(text=info[2])
+                self.ouLabelReverse.config(text=info[2])  # Aktualizace popisu v druhém rámci
             except KeyError:
                 pass
             if ((self.varTransaction.get() == "purchase" or self.varTransaction.get() == "sale") and
                     self.ammount.get() != ''):
                 self.calcBtn.config(state="normal")
+                self.calcBtnReverse.config(state="normal")  # Povolení tlačítka pro druhý výpočet
 
     def changeTransaction(self):
         self.output.set(0)
@@ -155,6 +175,13 @@ class Application(tk.Tk):
             self.output.set(math.floor((self.input.get() / float(self.ammount.get())) * float(self.rate.get())))
         elif self.varTransaction.get() == "sale":
             self.output.set(math.ceil((self.input.get() / float(self.ammount.get())) * float(self.rate.get())))
+
+    def calculate_reverse(self):
+        # Výpočet pro CZK na vybranou cizí měnu
+        if self.varTransaction.get() == "purchase":
+            self.output_reverse.set(math.floor((self.input_reverse.get() * float(self.ammount.get())) / float(self.rate.get())))
+        elif self.varTransaction.get() == "sale":
+            self.output_reverse.set(math.ceil((self.input_reverse.get() * float(self.ammount.get())) / float(self.rate.get())))
 
     def chbtnAutoClick(self):
         with open("settings.txt", "w") as f:
